@@ -1,12 +1,12 @@
 source("common.R")
 
 us_summary = inventory %>%
-  group_by(year) %>%
-  summarise(total_emission=sum(Emissions) / 1000)
+             group_by(year) %>%
+             summarise(total_emission=sum(Emissions) / 1000)
 
 par(mfrow=c(1, 1), mgp=c(3, 1.5, 1))
 barplot(us_summary$total_emission,
-        main="Total emissions from PM2.5 in US",
+        main=expression("Total emissions from PM"[2.5]*" in US"),
         xlab="",
         ylab="Total emission (in 1000 tones)",
         ylim=c(0, 7500),
