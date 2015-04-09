@@ -18,3 +18,4 @@ sum(zipcodes == 21231)
 
 download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv", destfile = "2.csv", method="curl")
 DT = fread("2.csv")
+DT[,mean(pwgtp15),by=SEX]
