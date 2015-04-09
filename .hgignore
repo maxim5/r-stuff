@@ -4,5 +4,7 @@ syntax: glob
 *.csv
 *.rds
 *.pdf
+*.xlsx
+*.xml
 .RData
 
