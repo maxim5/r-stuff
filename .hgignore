@@ -6,5 +6,6 @@ syntax: glob
 *.pdf
 *.xlsx
 *.xml
+*.jpg
 .RData
 
