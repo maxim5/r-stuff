@@ -2,7 +2,8 @@ library(dplyr)
 library(magrittr)
 
 library(ggplot2)
-require(scales)
+library(scales)
+library(zoo)
 
 data = read.csv("table.csv") %>% tbl_df()
 clean = data %>%
