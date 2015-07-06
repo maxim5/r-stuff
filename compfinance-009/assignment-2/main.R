@@ -56,7 +56,7 @@ pC1 = 41.74
 (ccC = log(pC1 / pC0) * 100)
 
 # Q13
-(div_yield_A = 0.10 / pA1 * 100)
+(div_yield_A = 0.10 / pA0 * 100)
 (total_return_A = srA + div_yield_A)
 
 # Q14
