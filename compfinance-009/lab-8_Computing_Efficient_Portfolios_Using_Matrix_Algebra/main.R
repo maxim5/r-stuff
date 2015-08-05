@@ -1,6 +1,6 @@
 # Load the relevant packages
-library("zoo")
-library("quadprog")
+library(zoo)
+library(quadprog)
 source("portfolio_noshorts.R")
 
 # Load the working environment
