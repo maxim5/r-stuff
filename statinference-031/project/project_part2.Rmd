@@ -1,13 +1,16 @@
 ---
 title: 'Statistical Inference Course Project: Part 2'
-output: html_document
+output: 
+  pdf_document: 
+    latex_engine: xelatex
 ---
 
 *by Maxim Podkolzine*
 
+\vspace*{1\baselineskip}
 **Problem:** Analyze the `ToothGrowth` data in the R datasets package.
 
-<br>
+\vspace*{1\baselineskip}
 **Q1-Q2:** First of all let's load the data and provide a basic summary.
 
 ```{r, echo=FALSE}
@@ -43,7 +46,7 @@ ggplot(data=ToothGrowth, aes(x=as.factor(dose), y=len, color=supp)) +
   guides(color=guide_legend(title="Supplement type"))
 ```
 
-<br>
+\vspace*{1\baselineskip}
 **Q3:** Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose.
 
 As can be seen in the plot, there is a clear positive correlation between the tooth length and the dose levels of Vitamin C, for both delivery methods. Let's test that formally, but start with a simple regression.
@@ -71,7 +74,7 @@ t.test(dose.2, dose.1, paired=FALSE, var.equal=TRUE)
 
 95% confidence intervals for both tests do not contain 0. So we reject the null hypothesis (which is the difference in length is 0), concluding that the dosage effect is significant.
 
-<br>
+\vspace*{1\baselineskip}
 Finally let's t-test that the tooth length depends on the delivery method.
 
 ```{r}
@@ -86,7 +89,7 @@ t.test(oj.group, vc.group, paired=FALSE, var.equal=FALSE)
 95% confidence interval does contain 0, so we cannot reject the null hypothesis (which is again the difference in length is 0).
 But we can with 90% interval, since the p-value is 6%.
 
-<br>
+\vspace*{1\baselineskip}
 **Q4:** Conclusions.
 
 - Dosage has positive impact on tooth length: the length increases with higher dosage of Vitamin C.
