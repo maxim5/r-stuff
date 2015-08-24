@@ -1,0 +1,96 @@
+---
+title: 'Statistical Inference Course Project: Part 2'
+output: 
+  pdf_document: 
+    latex_engine: xelatex
+---
+
+*by Maxim Podkolzine*
+
+\vspace*{1\baselineskip}
+**Problem:** Analyze the `ToothGrowth` data in the R datasets package.
+
+\vspace*{1\baselineskip}
+**Q1-Q2:** First of all let's load the data and provide a basic summary.
+
+```{r, echo=FALSE}
+library(datasets)
+library(ggplot2)
+```
+
+```{r}
+data(ToothGrowth)
+head(ToothGrowth)
+```
+
+The response is the length of odontoblasts (teeth) in each of 10 guinea pigs at each of three dose levels of Vitamin C (0.5, 1, and 2 mg) with each of two delivery methods (orange juice or ascorbic acid).
+
+```{r}
+str(ToothGrowth)
+```
+
+A data frame contains 60 observations of 3 variables: `len`	is a tooth length (numeric), `supp`	 is a	supplement type (a factor, VC or OJ), `dose`	is a dose in milligrams (numeric, 0.5, 1 or 2).
+
+```{r}
+summary(ToothGrowth)
+```
+
+A visual presentation might be helpful.
+
+```{r}
+ggplot(data=ToothGrowth, aes(x=as.factor(dose), y=len, color=supp)) +
+  geom_point(size=3, alpha=0.6) +
+  facet_grid(. ~ supp) +
+  xlab("Dose") +
+  ylab("Tooth length") +
+  guides(color=guide_legend(title="Supplement type"))
+```
+
+\vspace*{1\baselineskip}
+**Q3:** Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose.
+
+As can be seen in the plot, there is a clear positive correlation between the tooth length and the dose levels of Vitamin C, for both delivery methods. Let's test that formally, but start with a simple regression.
+
+```{r}
+fit <- lm(len ~ dose + supp, data=ToothGrowth)
+summary(fit)
+```
+
+`R-squared` is equal to 70%, which means most of the variance in tooth length is explained by the dose and supplement.
+
+<br>
+Now let's t-test that the tooth length depends on the dosage.
+
+```{r}
+dose.0.5 = ToothGrowth$len[ToothGrowth$dose == 0.5]
+dose.1 = ToothGrowth$len[ToothGrowth$dose == 1]
+dose.2 = ToothGrowth$len[ToothGrowth$dose == 2]
+```
+
+```{r}
+t.test(dose.1, dose.0.5, paired=FALSE, var.equal=TRUE)
+t.test(dose.2, dose.1, paired=FALSE, var.equal=TRUE)
+```
+
+95% confidence intervals for both tests do not contain 0. So we reject the null hypothesis (which is the difference in length is 0), concluding that the dosage effect is significant.
+
+\vspace*{1\baselineskip}
+Finally let's t-test that the tooth length depends on the delivery method.
+
+```{r}
+oj.group = ToothGrowth$len[ToothGrowth$supp=="OJ"]
+vc.group = ToothGrowth$len[ToothGrowth$supp=="VC"]
+```
+
+```{r}
+t.test(oj.group, vc.group, paired=FALSE, var.equal=FALSE)
+```
+
+95% confidence interval does contain 0, so we cannot reject the null hypothesis (which is again the difference in length is 0).
+But we can with 90% interval, since the p-value is 6%.
+
+\vspace*{1\baselineskip}
+**Q4:** Conclusions.
+
+- Dosage has positive impact on tooth length: the length increases with higher dosage of Vitamin C.
+- Orange juice is more eﬀective than ascorbic acid, but the influence is not that significant, mostly because the difference with 2mg dosage is very small.
